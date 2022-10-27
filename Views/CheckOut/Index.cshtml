@@ -1,0 +1,75 @@
+@model IEnumerable<RAS.BOOTCAMP.TEMPLATE.Datas.Entities.Keranjang>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    ViewBag.Title = "AddToCart";
+}
+
+<h2 style = "text-align:center">Data Order</h2>
+
+<table class="table">
+    <tr>
+        <th class="thead">
+            NO
+        </th>
+        <th class="thead">
+            Nama Barang
+        </th>
+        <th class="thead">
+            Nama Toko
+        </th>
+        <th class="thead">
+            Item
+        </th>
+         <th class="thead">
+            Jumlah Barang
+        </th>
+        <th class="thead">
+            Harga
+        </th>
+        <th class="thead" class="text-align:center">
+            Action
+        </th>
+    </tr>
+    @{
+        int i = 1;
+    }
+@if(Model != null)
+{
+  @foreach (var item in Model) {
+      <tr>
+        <td class="thead">
+              @(i++)
+          </td>
+          <td class="thead">
+              @Html.DisplayFor(modelItem => item.IdBarangNavigation.Nama)
+          </td>
+          <td class="thead">
+              @Html.DisplayFor(modelItem => item.IdBarangNavigation.IdPenjualNavigation.NamaToko)
+          </td>
+          <td class="thead">
+            <img src="@item.IdBarangNavigation.Url" width="100px" height="100px">
+          </td>
+          <td class="thead">
+              @Html.DisplayFor(modelItem => item.Jumlah)
+          </td>
+          <td class="thead">
+              @(item.Jumlah * item.HargaSatuan)
+          </td>
+      </tr>       
+  }
+}
+<td>
+    <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Order" asp-controller="CheckOut" method="Post">
+                <button type="submit" class="btn btn-primary">
+                    Order
+                </button>
+            </form>
+        </div>
+    </td>   
+</table>

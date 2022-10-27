@@ -1,0 +1,94 @@
+
+@model RAS.BOOTCAMP.TEMPLATE.Datas.Entities.Transaksi
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    ViewBag.Title = "AddToCart";
+}
+
+<h2 style = "text-align:center">Data Order</h2>
+
+<table class="table">
+    <tr>
+        <th class="thead">
+            ID INVOICE
+        </th>
+        <th class="thead">
+            TOTAL HARGA
+        </th>
+        <th class="thead">
+            STATUS TRANSAKSI
+        </th>
+        <th class="thead">
+            STATUS BAYAR
+        </th>
+        <th class="thead">
+            ALAMAT
+        </th>
+        <th class="thead" class="text-align:center">
+            Action
+        </th>
+    </tr>
+    <tr>
+        <td class="thead">
+              @($"INV{Model.IdTransaksi.ToString().PadLeft(8, '0')}")
+          </td>
+          <td class="thead">
+              @($"{Model.TotalHarga:C}")
+          </td>
+          <td class="thead">
+              @Model.StatusTransaksi
+          </td>
+          <td class="thead">
+              @Model.StatusBayar
+          </td>
+          <td class="thead">
+              @Model.AlamatPengiriman
+          </td>
+      </tr>
+      <td>
+        @if((Model.StatusTransaksi == "Wait Konfirmasi") || (Model.StatusTransaksi == "Sedang di Proses"))
+        {
+      <div class="row">
+        <div class="col-md-8">
+            <form asp-action="OrderBuy" asp-controller="Order" asp-route-id="@Model.IdTransaksi" method="Post">
+                <button type="submit" class="btn btn-primary">
+                    Buy
+                </button>
+            </form>
+        </div>
+      </div>
+        <div class="col-md-8">
+            <form asp-action="CancelBuy" asp-controller="Order" asp-route-id="@Model.IdTransaksi" method="Post">
+                <button type="submit" class="btn btn-danger">
+                    Cancel
+                </button>
+            </form>
+        </div>
+      }
+      @if(Model.StatusTransaksi == "Dikirimkan")
+      {
+      <div class="row">
+         <div class="col-md-8">
+            <form asp-action="Terima" asp-controller="Order" asp-route-id="@Model.IdTransaksi" method="Post">
+                <button type="submit" class="btn btn-primary">
+                    Terima Pesanan
+                </button>
+            </form>
+        </div>
+      </div>
+      }
+      @if(Model.StatusTransaksi == "Sudah Di Terima")
+      {
+        <div class="col-md-8">
+            <form asp-action="SelesaiTransaksi" asp-controller="Order" asp-route-id="@Model.IdTransaksi" method="Post">
+                <button type="submit" class="btn btn-danger">
+                    Memesan Selesai
+                </button>
+            </form>
+        </div>
+      }
+    </td>   

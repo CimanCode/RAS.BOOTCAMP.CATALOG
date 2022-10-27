@@ -1,0 +1,92 @@
+@model IEnumerable<RAS.BOOTCAMP.TEMPLATE.Datas.Entities.Keranjang>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    ViewBag.Title = "AddToCart";
+}
+
+<h2 style = "text-align:center">Data Keranjang</h2>
+
+<table class="table">
+    <tr>
+        <th class="thead">
+            Id Barang
+        </th>
+        <th class="thead">
+            Nama Barang
+        </th>
+        <th class="thead">
+            Harga Satuan
+        </th>
+        <th class="thead">
+            Item
+        </th>
+         <th class="thead">
+            Jumlah Barang
+        </th>
+        <th class="thead" class="text-align:center">
+            Action
+        </th>
+    </tr>
+@if(Model != null)
+{
+  @foreach (var item in Model) {
+      <tr>
+          <td class="thead">
+              @Html.DisplayFor(modelItem => item.IdBarang)
+          </td class="thead">
+          <td class="thead">
+              @Html.DisplayFor(modelItem => item.IdBarangNavigation.Nama)
+          </td>
+          <td class="thead">
+              @Html.DisplayFor(modelItem => item.IdBarangNavigation.Harga)
+          </td>
+          <td class="thead">
+              <img src="@item.IdBarangNavigation.Url" width="100px" height="100px">
+          </td>
+          <td class="thead">
+            <form asp-action="EditCart" asp-controller="Keranjang" method="Post">
+              <div class="col-md-4">
+                    <div class="form-group">
+                        <input type="hidden" name="IdBarang" value="@item.IdBarang"/>
+                            <label for="qty">
+                                Jumlah
+                            </label>
+                        <input type="number" id="Jumlah" min="1" name="Jumlah" value="@item.Jumlah"/>
+                    </div>
+                </div>
+                <div class="col-m-4" style="text-align:center">
+                    <button type="submit" class="btn btn-primary">
+                        Update
+                    </button>
+                </div>
+            </form>
+          </td>
+          <td class="thead">
+              <a type="delete" class="btn btn-danger" asp-route-id="@item.IdBarang" asp-controller="Keranjang" asp-action="RemoveFromCart">Remove</a>
+          </td>
+          <td>
+          </td>
+      </tr>       
+  }
+}
+   <td>
+        <div class="row">
+        <div class="col-md-6">
+            <form asp-action="Clear" asp-controller="Keranjang" method="Post">
+                <button type="submit" class="btn btn-danger">
+                    Clear All
+                </button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <a type="button" class="btn btn-primary" href="@Url.Action("Index", "CheckOut")">
+                    Checkout
+            </a>
+        </div>
+        </div>
+    </td>   
+</table>

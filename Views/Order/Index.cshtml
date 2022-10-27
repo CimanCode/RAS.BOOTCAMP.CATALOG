@@ -1,0 +1,62 @@
+@using System.Globalization
+@model IEnumerable<RAS.BOOTCAMP.TEMPLATE.Datas.Entities.Transaksi>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@{
+    ViewBag.Title = "AddToCart";
+}
+
+<h2 style = "text-align:center">Data Order</h2>
+
+<table class="table">
+    <tr>
+        <th class="thead">
+            NO
+        </th>
+        <th class="thead">
+            ID INVOICE
+        </th>
+        <th class="thead">
+            TOTAL HARGA
+        </th>
+        <th class="thead">
+            STATUS TRANSAKSI
+        </th>
+        <th class="thead">
+            STATUS BAYAR
+        </th>
+        <th class="thead" class="text-align:center">
+            Action
+        </th>
+    </tr>
+    @{
+        int i = 1;
+    }
+@if(Model != null)
+{
+  @foreach (var item in Model) {
+      <tr>
+        <td class="thead">
+              @(i++)
+          </td>
+          <td class="thead">
+              @($"INV{item.IdTransaksi.ToString().PadLeft(8, '0')}")
+          </td>
+          <td class="thead">
+              @($"{item.TotalHarga:C}")
+          </td>
+          <td class="thead">
+              @item.StatusTransaksi
+          </td>
+          <td class="thead">
+              @item.StatusBayar
+          </td>
+          <td class="thead">
+              <a class="btn btn-success" href="@Url.Action("Detail", new { id = @item.IdTransaksi })">Detail</a>
+          </td>
+      </tr>       
+  }
+}
